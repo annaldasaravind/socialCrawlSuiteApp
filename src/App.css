@@ -1,0 +1,479 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.navBar {
+  border-bottom: 1px solid rgb(177, 177, 177);
+  position: fixed;
+  width: 100%;
+  height: 70px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  background-color: rgb(142, 189, 190);
+  box-shadow: 0px 2px 10px rgb(87, 87, 87);
+  z-index: 999;
+  padding-left: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navBar .title {
+  font-size: 40px;
+  line-height: 70px;
+  cursor: pointer;
+  color: rgb(43, 43, 39);
+}
+
+.navBar .title:hover {
+  color: white;
+  transition: color 0.2s;
+}
+
+.navBar .tRefresh {
+  margin-right: 20px;
+  padding: 0px 10px;
+  line-height: 70px;
+  font-size: 28px;
+  color: rgb(43, 43, 39);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.navBar .tRefresh:hover {
+  color: white;
+}
+
+.navBar .tRefresh.rotate {
+  transform: rotate(360deg);
+}
+
+.dropBox {
+  width: 100%;
+  height: 50px;
+}
+
+#dropDown {
+  border: none;
+  border-bottom: 1px solid rgb(177, 177, 177);
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  padding-left: 20px;
+  outline: none;
+  font-weight: bold;
+  background-color: rgb(237, 237, 237);
+}
+
+.container {
+  border: 1px solid rgb(177, 177, 177);
+  border-top: none;
+  position: fixed;
+  width: 18%;
+  height: 100%;
+  top: 70px;
+}
+
+.container1 {
+  height: 90%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.whatsapp {
+  border-bottom: 1px solid rgb(177, 177, 177);
+  display: flex;
+  background-color: rgb(237, 237, 237);
+  cursor: pointer;
+  color: black;
+  padding: 5px 20px;
+  justify-content: space-between;
+}
+
+.whatsapp.selected {
+  background-color: rgb(189, 189, 189);
+  color: black;
+}
+
+.whatsapp:hover {
+  background-color: rgb(189, 189, 189);
+  transition: background 500ms;
+}
+
+.image.waImage {
+  width: 40px;
+  height: 40px;
+  background-image: url('/images/img1.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  margin-top: 5px;
+}
+
+.image.igImage {
+  width: 40px;
+  height: 40px;
+  background-image: url('/images/img2.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 75px 50px;
+  margin-top: 5px;
+}
+
+.leadNo {
+  font-size: 21px;
+  padding-left: 6px;
+  font-weight: 600;
+}
+
+.subjects {
+  font-size: 15px;
+  font-weight: 600;
+  padding-left: 6px;
+}
+
+.messages {
+  width: 100%;
+  height: 90vh;
+  position: fixed;
+  left: 18%;
+  top: 70px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.app {
+  width: 65%;
+  height: fit-content;
+  position: sticky;
+  top: 0;
+  left: 7%;
+  z-index: 100;
+}
+
+.body_date {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.body_date.sendColor {
+  justify-content: flex-start;
+}
+
+.body_date.receiveColor {
+  justify-content: flex-end;
+}
+
+.text1 {
+  width: fit-content;
+}
+
+.body {
+  border: 1px solid rgb(177, 177, 177);
+  width: fit-content;
+  line-height: 50px;
+  margin-top: 20px;
+  border-radius: 4px;
+  padding: 0px 10px;
+  font-weight: 600;
+  background-color: rgb(215, 238, 215);
+  cursor: pointer;
+}
+
+.body.sendColor {
+  background-color: rgb(215, 238, 215);
+}
+
+.body.receiveColor {
+  background-color: rgb(221, 218, 218);
+  float: right;
+}
+
+.date.sendDate {
+  font-size: 9px;
+  margin-top: 2px;
+  float: left;
+}
+
+.date.receiveDate {
+  font-size: 9px;
+  margin-top: 2px;
+  float: right;
+  clear: right;
+}
+
+.image_link {
+  width: fit-content;
+  line-height: 20px;
+  margin-top: 10px;
+}
+
+.image_link a {
+  text-decoration: none;
+}
+
+.image_link a:hover {
+  color: rgb(243, 75, 75);
+}
+
+.day_wise {
+  border: 1px solid rgb(241, 230, 232);
+  width: fit-content;
+  line-height: 20px;
+  margin: 10px auto;
+  font-size: 10px;
+  padding: 0px 5px;
+  border-radius: 5px;
+  font-weight: 700;
+  background-color: rgb(241, 230, 232);
+}
+
+.sendMessages {
+  border: 1px solid rgb(201, 201, 201);
+  position: fixed;
+  z-index: 999;
+  width: fit-content;
+  line-height: 30px;
+  text-align: center;
+  right: 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0px 10px;
+  background-color: rgb(127, 127, 241);
+  color: white;
+}
+.sendMessages:hover {
+  background-color: rgb(86, 86, 246);
+  color: white;
+  transition: background 100ms;
+}
+
+.receiveMessages {
+  border: 1px solid rgb(201, 201, 201);
+  position: fixed;
+  z-index: 999;
+  width: fit-content;
+  line-height: 30px;
+  text-align: center;
+  right: 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0px 10px;
+  background-color: rgb(127, 127, 241);
+  color: white;
+}
+.receiveMessages:hover {
+  background-color: rgb(86, 86, 246);
+  color: white;
+  transition: background 100ms;
+}
+
+.receiveData {
+  border: 1px solid rgb(201, 201, 201);
+  position: fixed;
+  z-index: 999;
+  width: fit-content;
+  line-height: 30px;
+  text-align: center;
+  right: 20px;
+  top: 130px;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0px 10px;
+  background-color: rgb(127, 127, 241);
+  color: white;
+}
+
+.receiveData:hover {
+  background-color: rgb(86, 86, 246);
+  color: white;
+  transition: background 100ms;
+}
+
+.loadData {
+  border: 1px solid rgb(201, 201, 201);
+  position: fixed;
+  z-index: 999;
+  width: fit-content;
+  line-height: 30px;
+  text-align: center;
+  right: 20px;
+  top: 90px;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0px 10px;
+  background-color: rgb(127, 127, 241);
+  color: white;
+}
+
+.loadData:hover {
+  background-color: rgb(86, 86, 246);
+  color: white;
+  transition: background 100ms;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgb(129, 127, 127);
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.pop {
+  border: 1px solid rgb(202, 200, 200);
+  width: 400px;
+  height: 300px;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  padding: 5px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  background-color: white;
+  box-shadow: 5px 5px 10px rgb(125, 124, 124);
+}
+
+.form {
+  border: 1px solid rgb(202, 200, 200);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+.from {
+  display: flex;
+  justify-content: space-between;
+  line-height: 50px;
+  font-size: 20px;
+  text-align: center;
+  padding: 0px 25px;
+}
+
+/* input[type='radio'] {
+  cursor: pointer;
+  margin-right: 3px;
+} */
+
+.from_div,
+.to_div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.from_div div:first-child,
+.to_div div:first-child {
+  font-weight: 600;
+  margin-left: 4px;
+  font-size: 17px;
+}
+
+.from_div div:nth-child(2),
+.to_div div:nth-child(2) {
+  font-size: 14px;
+  margin: 1.5px 3px;
+}
+
+.message {
+  display: flex;
+  justify-content: space-evenly;
+  line-height: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0px 15px;
+}
+
+#message {
+  border: 1px solid rgb(185, 185, 185);
+  width: 235px;
+  height: 100px;
+  resize: none;
+}
+
+.btn {
+  display: flex;
+  justify-content: space-between;
+  line-height: 35px;
+  font-size: 20px;
+  padding: 0px 25px;
+}
+
+.btn > div {
+  border: 1px solid rgb(202, 200, 200);
+  background-color: rgb(226, 219, 242);
+  padding: 0px 10px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 3px;
+}
+
+.notif_arrow {
+  display: flex;
+  padding: 5px;
+  justify-content: space-between;
+}
+
+.notification {
+  width: 20px;
+  line-height: 45px;
+  color: rgb(248, 5, 5);
+  z-index: 999;
+  font-size: 18px;
+  margin: 0px 3px;
+}
+
+.notification :hover {
+  color: rgb(168, 1, 1);
+  filter: drop-shadow(0px 0px 20px rgb(124, 0, 0));
+  transition: color 0.3s, drop-shadow 0.3s;
+}
+
+.arrow {
+  line-height: 45px;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.arrow.selected {
+  background-color: rgb(189, 189, 189);
+  color: black;
+}
+
+.arrow.notSelected {
+  opacity: 0;
+}
+
+/* .notification.shake {
+  animation: shake 1s none;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  75% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+} */
