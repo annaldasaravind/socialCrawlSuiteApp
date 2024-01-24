@@ -207,28 +207,28 @@ function App() {
   };
 
   // Receiving data for whatsapp
-  const onReceiveData = async () => {
-    try {
-      const response = await axios.get('http://192.168.1.63:4000/send');
-      setMyData(response.data);
-      toast.success('You got a new message..', {
-        position: 'top-right',
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: 0,
-        theme: 'dark',
-        transition: Bounce,
-      });
-    } catch (error) {
-      console.error(
-        'Error receiving data:',
-        error.response || error.message || error
-      );
-    }
-  };
+  // const onReceiveData = async () => {
+  //   try {
+  //     const response = await axios.get('http://192.168.1.63:4000/send');
+  //     setMyData(response.data);
+  //     toast.success('You got a new message..', {
+  //       position: 'top-right',
+  //       autoClose: 2000,
+  //       hideProgressBar: true,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: 0,
+  //       theme: 'dark',
+  //       transition: Bounce,
+  //     });
+  //   } catch (error) {
+  //     console.error(
+  //       'Error receiving data:',
+  //       error.response || error.message || error
+  //     );
+  //   }
+  // };
 
   // Receiving data for instagram
   const onLoadData = async () => {
@@ -431,14 +431,14 @@ function App() {
           >
             ReceiveMessages
           </div>
-          <div
+          {/*<div
             title="ReceiveData"
             className="receiveData"
             onClick={onReceiveData}
             style={{ top: '170px' }}
           >
             ReceiveData
-          </div>
+          </div>*/}
         </>
       )}
       {/* URLs for Instagram */}
@@ -447,13 +447,13 @@ function App() {
           <div title="LoadData" className="loadData" onClick={onLoadData}>
             LoadData
           </div>
-          <div
+          {/* <div
             title="ReceiveData"
             className="receiveData"
             onClick={onReceiveData}
           >
             ReceiveData
-          </div>
+          </div> */}
         </>
       )}
       {/* Getting messages based on selecting subject */}

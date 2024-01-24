@@ -274,7 +274,7 @@ html {
   transition: background 100ms;
 }
 
-.receiveData {
+/* .receiveData {
   border: 1px solid rgb(201, 201, 201);
   position: fixed;
   z-index: 999;
@@ -294,7 +294,7 @@ html {
   background-color: rgb(86, 86, 246);
   color: white;
   transition: background 100ms;
-}
+} */
 
 .loadData {
   border: 1px solid rgb(201, 201, 201);
@@ -400,6 +400,7 @@ html {
   width: 235px;
   height: 100px;
   resize: none;
+  padding: 5px;
 }
 
 .btn {
