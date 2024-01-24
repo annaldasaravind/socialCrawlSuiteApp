@@ -400,6 +400,7 @@ html {
   width: 235px;
   height: 100px;
   resize: none;
+  padding: 5px;
 }
 
 .btn {
