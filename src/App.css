@@ -4,74 +4,119 @@
   padding: 0;
 }
 
+:root {
+  --border: rgb(218, 249, 254);
+  --hover: rgb(236, 235, 235);
+  --text: rgb(48, 48, 48);
+  --button: rgb(127, 127, 241);
+  --button-hover: rgb(86, 86, 246);
+}
+
 html {
   scroll-behavior: smooth;
 }
 
+body {
+  color: var(--text);
+}
+
+/* .receiveData {
+  border: 1px solid rgb(201, 201, 201);
+  position: fixed;
+  z-index: 999;
+  width: fit-content;
+  line-height: 30px;
+  text-align: center;
+  right: 20px;
+  top: 130px;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0px 10px;
+  background-color: rgb(127, 127, 241);
+  color: white;
+}
+
+.receiveData:hover {
+  background-color: rgb(86, 86, 246);
+  color: white;
+  transition: background 100ms;
+} */
+
+/* .notification.shake {
+  animation: shake 1s none;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  75% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+} */
+
+/* App Component */
 .navBar {
-  border-bottom: 1px solid rgb(177, 177, 177);
+  border-bottom: 1px solid var(--border);
   position: fixed;
   width: 100%;
   height: 70px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  background-color: rgb(142, 189, 190);
-  box-shadow: 0px 2px 10px rgb(87, 87, 87);
-  z-index: 999;
+  font-family: 'Roboto', sans-serif;
+  z-index: 1;
   padding-left: 25px;
   display: flex;
   justify-content: space-between;
+  background-color: #f0f2f5;
 }
 
 .navBar .title {
+  width: fit-content;
+  height: 70px;
   font-size: 40px;
   line-height: 70px;
   cursor: pointer;
-  color: rgb(43, 43, 39);
 }
-
-.navBar .title:hover {
-  color: white;
-  transition: color 0.2s;
-}
-
 .navBar .tRefresh {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  width: 100px;
   margin-right: 20px;
-  padding: 0px 10px;
-  line-height: 70px;
-  font-size: 28px;
-  color: rgb(43, 43, 39);
+  margin-top: 15px;
+  padding: 10px 0px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
   transition: transform 0.15s ease;
+  background-color: var(--border);
+}
+
+.navBar .tRefresh .tRefreshText {
+  margin-left: 8px;
 }
 
 .navBar .tRefresh:hover {
-  color: white;
+  background: rgb(195, 228, 235);
+  transition: background 0.3s;
 }
 
 .navBar .tRefresh.rotate {
   transform: rotate(360deg);
 }
 
-.dropBox {
-  width: 100%;
-  height: 50px;
-}
-
-#dropDown {
-  border: none;
-  border-bottom: 1px solid rgb(177, 177, 177);
-  width: 100%;
-  height: 50px;
-  font-size: 18px;
-  padding-left: 20px;
-  outline: none;
-  font-weight: bold;
-  background-color: rgb(237, 237, 237);
-}
-
 .container {
-  border: 1px solid rgb(177, 177, 177);
+  border: 1px solid var(--border);
   border-top: none;
   position: fixed;
   width: 18%;
@@ -79,30 +124,29 @@ html {
   top: 70px;
 }
 
+.dropBox {
+  position: relative;
+  width: 100%;
+  height: 50px;
+}
+
+#dropDown {
+  border: none;
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  outline: none;
+  padding: 0px 20px;
+  font-weight: bold;
+  background-color: rgb(249, 249, 249);
+  cursor: pointer;
+}
+
 .container1 {
   height: 87vh;
   overflow-y: auto;
   scroll-behavior: smooth;
-}
-
-.whatsapp {
-  border-bottom: 1px solid rgb(177, 177, 177);
-  display: flex;
-  background-color: rgb(237, 237, 237);
-  cursor: pointer;
-  color: black;
-  padding: 5px 20px;
-  justify-content: space-between;
-}
-
-.whatsapp.selected {
-  background-color: rgb(189, 189, 189);
-  color: black;
-}
-
-.whatsapp:hover {
-  background-color: rgb(189, 189, 189);
-  transition: background 500ms;
 }
 
 .image.waImage {
@@ -137,23 +181,304 @@ html {
   padding-left: 6px;
 }
 
-.messages {
+.notif_arrow {
+  display: flex;
+  padding: 5px;
+  justify-content: space-between;
+}
+
+.notification {
+  width: 20px;
+  line-height: 45px;
+  color: tomato;
+  z-index: 10;
+  font-size: 18px;
+  margin: 0px 3px;
+}
+
+.notification :hover {
+  filter: drop-shadow(0px 0px 20px tomato);
+  transition:
+    color 0.3s,
+    drop-shadow 0.3s;
+}
+
+.arrow {
+  line-height: 45px;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.arrow.selected {
+  color: black;
+}
+
+.arrow.notSelected {
+  opacity: 0;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgb(129, 127, 127);
+  z-index: 11;
+  opacity: 0.5;
+}
+
+.pop {
+  border: 1px solid var(--border);
+  width: 550px;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  padding: 16px;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+  background-color: white;
+  box-shadow: 5px 5px 10px rgb(125, 124, 124);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
-  height: 90vh;
+  height: 100%;
+}
+
+.from {
+  display: flex;
+  justify-content: space-between;
+  line-height: 50px;
+  font-size: 20px;
+  text-align: center;
+}
+
+/* input[type='radio'] {
+  cursor: pointer;
+  margin-right: 3px;
+} */
+
+.from_div,
+.to_div {
+  font-size: 14px;
+}
+
+.from_div span:first-child,
+.to_div span:first-child {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.message {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#message {
+  border: 1px solid rgb(226, 219, 242);
+  width: 100%;
+  height: 100px;
+  resize: none;
+  padding: 5px;
+}
+
+label div {
+  margin-bottom: 8px;
+}
+
+.btn {
+  display: flex;
+  gap: 8px;
+  line-height: 35px;
+  font-size: 20px;
+}
+
+.btn > div {
+  border: 1px solid var(--border);
+  width: 100%;
+  background-color: var(--button);
+  padding: 0px 10px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 3px;
+  color: white;
+}
+
+.btn > div:hover {
+  background-color: var(--button-hover);
+  transition: background 0.2s;
+}
+
+.whatsapp {
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  background-color: rgb(249, 249, 249);
+  cursor: pointer;
+  color: black;
+  padding: 5px 20px;
+  justify-content: space-between;
+}
+
+.whatsapp:hover {
+  background-color: var(--hover);
+  transition: background 200ms;
+}
+
+.whatsapp.selected {
+  background-color: rgb(228, 228, 228);
+  color: black;
+}
+
+.whatsapp_container {
+  z-index: 19;
+  position: relative;
+  width: 160px;
+  height: 100px;
+  left: 90.5%;
+  top: 70px;
+}
+
+.sendMessages {
+  border: 1px solid var(--border);
+  width: 140px;
+  height: 35px;
+  padding: 5px;
+  text-align: center;
+  position: fixed;
+  right: 30px;
+  color: white;
+  background-color: var(--button);
+  border-radius: 3px;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.sendMessages:hover {
+  background-color: var(--button-hover);
+  color: white;
+  transition: background 100ms;
+}
+
+.receiveMessages {
+  border: 1px solid var(--border);
+  width: 140px;
+  height: 35px;
+  position: fixed;
+  text-align: center;
+  right: 30px;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 5px;
+  background-color: var(--button);
+  color: white;
+  z-index: 20;
+}
+
+.receiveMessages:hover {
+  background-color: var(--button-hover);
+  color: white;
+  transition: background 100ms;
+}
+
+.instagram_container {
+  z-index: 19;
+  position: relative;
+  width: 160px;
+  height: 50px;
+  left: 90.5%;
+  top: 70px;
+  padding-top: 10px;
+}
+
+.loadData {
+  border: 1px solid var(--border);
+  width: 140px;
+  height: 35px;
+  padding: 5px;
+  text-align: center;
+  position: fixed;
+  right: 30px;
+  color: white;
+  background-color: var(--button);
+  border-radius: 3px;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.loadData:hover {
+  background-color: var(--button-hover);
+  color: white;
+  transition: background 100ms;
+}
+
+/* Number1 Component */
+.messages {
+  width: 82%;
+  height: 92vh;
   position: fixed;
   left: 18%;
   top: 70px;
   overflow-y: auto;
   scroll-behavior: smooth;
+  z-index: 5;
+}
+
+.messages .img {
+  width: 82%;
+  height: 92vh;
+  position: fixed;
+  left: 18%;
+  top: 70px;
+  background-image: url('../images/whatsapp.png');
+  background-position: center;
+  background-repeat: repeat;
+  background-color: hsl(36.92deg 28.89% 91.18%);
 }
 
 .app {
-  width: 65%;
+  width: 82%;
   height: fit-content;
-  position: sticky;
+  position: absolute;
+  padding: 10px;
   top: 0;
   left: 7%;
-  z-index: 100;
+  z-index: 6;
+}
+
+.image_link {
+  width: fit-content;
+  line-height: 20px;
+  margin-top: 10px;
+}
+
+.image_link a {
+  text-decoration: none;
+}
+
+.image_link a:hover {
+  color: rgb(243, 75, 75);
+}
+
+.day_heading {
+  width: 100%;
+}
+
+.day_wise {
+  border: 1px solid var(--border);
+  width: fit-content;
+  line-height: 20px;
+  margin: 10px auto;
+  font-size: 10px;
+  padding: 0px 5px;
+  border-radius: 5px;
+  font-weight: 700;
+  background-color: hsl(0deg 0% 99.61%);
 }
 
 .body_date {
@@ -171,310 +496,49 @@ html {
 }
 
 .text1 {
+  border: 1px solid var(--border);
   width: fit-content;
+  margin-top: 10px;
+}
+
+.text_sendColor {
+  border-radius: 10px;
+  border-top-left-radius: 0px;
+  background-color: hsl(0deg 0% 100%);
+}
+
+.text_receiveColor {
+  border-radius: 10px;
+  border-top-right-radius: 0px;
+  background-color: hsl(111.43deg 91.3% 90.98%);
 }
 
 .body {
-  border: 1px solid rgb(177, 177, 177);
   width: fit-content;
-  line-height: 50px;
-  margin-top: 20px;
-  border-radius: 4px;
+  line-height: 32px;
   padding: 0px 10px;
   font-weight: 600;
-  background-color: rgb(215, 238, 215);
   cursor: pointer;
 }
 
 .body.sendColor {
-  background-color: rgb(215, 238, 215);
+  float: left;
 }
 
 .body.receiveColor {
-  background-color: rgb(221, 218, 218);
   float: right;
 }
 
 .date.sendDate {
   font-size: 9px;
-  margin-top: 2px;
+  padding: 0px 10px 5px 10px;
   float: left;
+  clear: left;
 }
 
 .date.receiveDate {
   font-size: 9px;
-  margin-top: 2px;
+  padding: 0px 10px 5px 10px;
   float: right;
   clear: right;
 }
-
-.image_link {
-  width: fit-content;
-  line-height: 20px;
-  margin-top: 10px;
-}
-
-.image_link a {
-  text-decoration: none;
-}
-
-.image_link a:hover {
-  color: rgb(243, 75, 75);
-}
-
-.day_wise {
-  border: 1px solid rgb(241, 230, 232);
-  width: fit-content;
-  line-height: 20px;
-  margin: 10px auto;
-  font-size: 10px;
-  padding: 0px 5px;
-  border-radius: 5px;
-  font-weight: 700;
-  background-color: rgb(241, 230, 232);
-}
-
-.sendMessages {
-  border: 1px solid rgb(201, 201, 201);
-  position: fixed;
-  z-index: 999;
-  width: fit-content;
-  line-height: 30px;
-  text-align: center;
-  right: 20px;
-  border-radius: 3px;
-  cursor: pointer;
-  padding: 0px 10px;
-  background-color: rgb(127, 127, 241);
-  color: white;
-}
-.sendMessages:hover {
-  background-color: rgb(86, 86, 246);
-  color: white;
-  transition: background 100ms;
-}
-
-.receiveMessages {
-  border: 1px solid rgb(201, 201, 201);
-  position: fixed;
-  z-index: 999;
-  width: fit-content;
-  line-height: 30px;
-  text-align: center;
-  right: 20px;
-  border-radius: 3px;
-  cursor: pointer;
-  padding: 0px 10px;
-  background-color: rgb(127, 127, 241);
-  color: white;
-}
-.receiveMessages:hover {
-  background-color: rgb(86, 86, 246);
-  color: white;
-  transition: background 100ms;
-}
-
-/* .receiveData {
-  border: 1px solid rgb(201, 201, 201);
-  position: fixed;
-  z-index: 999;
-  width: fit-content;
-  line-height: 30px;
-  text-align: center;
-  right: 20px;
-  top: 130px;
-  border-radius: 3px;
-  cursor: pointer;
-  padding: 0px 10px;
-  background-color: rgb(127, 127, 241);
-  color: white;
-}
-
-.receiveData:hover {
-  background-color: rgb(86, 86, 246);
-  color: white;
-  transition: background 100ms;
-} */
-
-.loadData {
-  border: 1px solid rgb(201, 201, 201);
-  position: fixed;
-  z-index: 999;
-  width: fit-content;
-  line-height: 30px;
-  text-align: center;
-  right: 20px;
-  top: 90px;
-  border-radius: 3px;
-  cursor: pointer;
-  padding: 0px 10px;
-  background-color: rgb(127, 127, 241);
-  color: white;
-}
-
-.loadData:hover {
-  background-color: rgb(86, 86, 246);
-  color: white;
-  transition: background 100ms;
-}
-
-.overlay {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgb(129, 127, 127);
-  z-index: 1;
-  opacity: 0.5;
-}
-
-.pop {
-  border: 1px solid rgb(202, 200, 200);
-  width: 400px;
-  height: 300px;
-  position: fixed;
-  top: 35%;
-  left: 50%;
-  padding: 5px;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  background-color: white;
-  box-shadow: 5px 5px 10px rgb(125, 124, 124);
-}
-
-.form {
-  border: 1px solid rgb(202, 200, 200);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 100%;
-  height: 100%;
-}
-
-.from {
-  display: flex;
-  justify-content: space-between;
-  line-height: 50px;
-  font-size: 20px;
-  text-align: center;
-  padding: 0px 25px;
-}
-
-/* input[type='radio'] {
-  cursor: pointer;
-  margin-right: 3px;
-} */
-
-.from_div,
-.to_div {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-}
-
-.from_div div:first-child,
-.to_div div:first-child {
-  font-weight: 600;
-  margin-left: 4px;
-  font-size: 17px;
-}
-
-.from_div div:nth-child(2),
-.to_div div:nth-child(2) {
-  font-size: 14px;
-  margin: 1.5px 3px;
-}
-
-.message {
-  display: flex;
-  justify-content: space-evenly;
-  line-height: 50px;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 0px 15px;
-}
-
-#message {
-  border: 1px solid rgb(185, 185, 185);
-  width: 235px;
-  height: 100px;
-  resize: none;
-  padding: 5px;
-}
-
-.btn {
-  display: flex;
-  justify-content: space-between;
-  line-height: 35px;
-  font-size: 20px;
-  padding: 0px 25px;
-}
-
-.btn > div {
-  border: 1px solid rgb(202, 200, 200);
-  background-color: rgb(226, 219, 242);
-  padding: 0px 10px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 600;
-  border-radius: 3px;
-}
-
-.notif_arrow {
-  display: flex;
-  padding: 5px;
-  justify-content: space-between;
-}
-
-.notification {
-  width: 20px;
-  line-height: 45px;
-  color: rgb(248, 5, 5);
-  z-index: 999;
-  font-size: 18px;
-  margin: 0px 3px;
-}
-
-.notification :hover {
-  color: rgb(168, 1, 1);
-  filter: drop-shadow(0px 0px 20px rgb(124, 0, 0));
-  transition: color 0.3s, drop-shadow 0.3s;
-}
-
-.arrow {
-  line-height: 45px;
-  font-size: 22px;
-  font-weight: 900;
-}
-
-.arrow.selected {
-  background-color: rgb(189, 189, 189);
-  color: black;
-}
-
-.arrow.notSelected {
-  opacity: 0;
-}
-
-/* .notification.shake {
-  animation: shake 1s none;
-}
-
-@keyframes shake {
-  0% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-5px);
-  }
-  50% {
-    transform: translateY(5px);
-  }
-  75% {
-    transform: translateY(-5px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-} */
