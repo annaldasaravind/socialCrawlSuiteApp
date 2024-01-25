@@ -1,37 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-const Number1 = ({ messages, image, type }) => {
-  const uniqueMessageBodies = new Set();
+function Number1({ messages, image, type }) {
+  const uniqueMessageBodies = new Set()
 
-  // Filter unique messages based on message body
-  const uniqueMessages = messages.filter((message) => {
+  // // Filter unique messages based on message body
+  const uniqueMessages = messages.filter(message => {
     if (!uniqueMessageBodies.has(message.body)) {
-      uniqueMessageBodies.add(message.body);
-      return true;
+      uniqueMessageBodies.add(message.body)
+      return true
     }
-    return false;
-  });
+    return false
+  })
 
   // Sort unique messages by sent_date in descending order
-  const sortedMessages = uniqueMessages.slice().sort((a, b) => {
-    return new Date(a.sent_date) - new Date(b.sent_date);
-  });
+  const sortedMessages = uniqueMessages
+    .slice()
+    .sort((a, b) => new Date(a.sent_date) - new Date(b.sent_date))
 
   // Group messages by day
-  const messagesByDay = {};
-  sortedMessages.forEach((message) => {
-    const day = new Date(message.sent_date).toLocaleDateString();
+  const messagesByDay = {}
+  sortedMessages.forEach(message => {
+    const day = new Date(message.sent_date).toLocaleDateString()
     if (!messagesByDay[day]) {
-      messagesByDay[day] = [];
+      messagesByDay[day] = []
     }
-    messagesByDay[day].push(message);
-  });
+    messagesByDay[day].push(message)
+  })
 
   return (
     <>
       {type === 'whatsapp' ? (
-        <div style={{ display: 'none' }}></div>
+        <div style={{ display: 'none' }} />
       ) : (
         <div className="image_link">
           <a href={image} target="_blank" rel="noreferrer">
@@ -40,29 +40,21 @@ const Number1 = ({ messages, image, type }) => {
         </div>
       )}
 
-      {Object.entries(messagesByDay).map(([day, dayMessages], index) => (
-        <div key={index} className="day_heading">
+      {Object.entries(messagesByDay).map(([day, dayMessages]) => (
+        <div key={day} className="day_heading">
           <div className="day_wise">{day}</div>
-          {dayMessages.map((message, index) => (
+          {dayMessages.map(message => (
             <div
-              key={index}
-              className={`body_date ${
-                message.key === 'send' ? 'sendColor' : 'receiveColor'
-              }`}
+              key={message}
+              className={`body_date ${message.key === 'send' ? 'sendColor' : 'receiveColor'}`}
             >
-              <div className="text1">
-                <div
-                  className={`body ${
-                    message.key === 'send' ? 'sendColor' : 'receiveColor'
-                  }`}
-                >
+              <div
+                className={`text1 ${message.key === 'send' ? 'text_sendColor' : 'text_receiveColor'}`}
+              >
+                <div className={`body ${message.key === 'send' ? 'sendColor' : 'receiveColor'}`}>
                   {message.body}
                 </div>
-                <div
-                  className={`date ${
-                    message.key === 'send' ? 'sendDate' : 'receiveDate'
-                  }`}
-                >
+                <div className={`date ${message.key === 'send' ? 'sendDate' : 'receiveDate'}`}>
                   {new Date(message.sent_date).toLocaleTimeString()}
                 </div>
               </div>
@@ -71,13 +63,14 @@ const Number1 = ({ messages, image, type }) => {
         </div>
       ))}
     </>
-  );
-};
+  )
+}
 
 Number1.propTypes = {
-  messages: PropTypes.array.isRequired,
-  image: PropTypes.any.isRequired,
+  // messages: PropTypes.array.isRequired,
+  messages: PropTypes.arrayOf(PropTypes.string).isRequired,
+  image: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-};
+}
 
-export default Number1;
+export default Number1

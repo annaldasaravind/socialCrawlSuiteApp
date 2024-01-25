@@ -1,141 +1,133 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Number1 from './components/Number1';
-import './App.css';
-import { ToastContainer, toast, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-/////
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-/////
+/* eslint-disable no-console */
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import './App.css'
+import { ToastContainer, toast, Bounce } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell, faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
+import Number1 from './components/Number1'
+import '@fortawesome/fontawesome-svg-core/styles.css'
 
 function App() {
-  const [myData, setMyData] = useState({ result: [] });
-  const [filteredResults, setFilteredResults] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState(null);
-  const [myDataResult, setMyDataResult] = useState(null);
-  const [selectedOption, setSelectedOption] = useState('');
-  const [modal, setModal] = useState(false);
-  // const [radioInput, setRadioInput] = useState('');
-  const [message, setMessage] = useState('');
-  const [options, setOptions] = useState([]);
-  // const [postData, setPostData] = useState({});
-  const [isRotated, setRotated] = useState(false);
+  const [myData, setMyData] = useState({ result: [] })
+  const [filteredResults, setFilteredResults] = useState([])
+  const [selectedSubject, setSelectedSubject] = useState(null)
+  const [myDataResult, setMyDataResult] = useState(null)
+  const [selectedOption, setSelectedOption] = useState('')
+  const [modal, setModal] = useState(false)
+  const [message, setMessage] = useState('')
+  const [options, setOptions] = useState([])
+  const [isRotated, setRotated] = useState(false)
+  const [dropDown, setDropDown] = useState(false)
 
   // Reading Data
   const myFunction = async () => {
     try {
-      const response = await axios.get('http://192.168.1.63:4000/send');
-      setMyData(response.data);
-      setFilteredResults(response.data.result);
+      const response = await axios.get('http://192.168.1.63:4000/send')
+      setMyData(response.data)
+      setFilteredResults(response.data.result)
       // Getting group of subject for whatsapp (or) instagram after selecting
-      setOptions([...new Set(response.data.result.map((type) => type.type))]);
+      setOptions([...new Set(response.data.result.map(type => type.type))])
       if (response.data.result.length > 0) {
-        setSelectedSubject(response.data.result[0].subject);
+        setSelectedSubject(response.data.result[0].subject)
       }
     } catch (error) {
-      console.error(
-        'Error fetching data:',
-        error.response || error.message || error
-      );
+      console.error('Error fetching data:', error.response || error.message || error)
     }
-  };
+  }
 
   useEffect(() => {
-    myFunction();
-  }, []);
+    myFunction()
+  }, [])
 
   // By clicking subject getting messages
-  const onClickHandler = (subject, type, messages) => {
-    setSelectedSubject(subject);
-    setMyDataResult(type);
-    // setOriginalLength(messages.length);
-  };
+  const onClickHandler = (subject, type) => {
+    setSelectedSubject(subject)
+    setMyDataResult(type)
+  }
 
   // Filtering the data based on subject like searching
   // selectedOption === '' means All
   // result.type === selectedOption means whatsapp or instagram
-  const onSelectOptionInDropDown = (e) => {
-    setSelectedOption(e.target.value);
-    const filteredResults = myData.result.filter(
-      (result) => e.target.value === '' || result.type === e.target.value
-    );
-    setFilteredResults(filteredResults);
-  };
+  const onSelectOptionInDropDown = e => {
+    setSelectedOption(e.target.value)
+    const myFilteredResults = myData.result.filter(
+      result => e.target.value === '' || result.type === e.target.value
+    )
+    setFilteredResults(myFilteredResults)
+    setDropDown(!dropDown)
+  }
 
   // Refreshing the content
   const onRefresh = () => {
-    window.location.reload();
-    setRotated(!isRotated);
-  };
+    window.location.reload()
+    setRotated(!isRotated)
+  }
 
   // Sending an message through pop-up
   const onSendMessageOpen = async () => {
-    setModal(!modal);
-  };
+    setModal(!modal)
+  }
 
   // Closing the pop-up of sending a message
   const onSendMessageClose = () => {
-    setModal(!modal);
+    setModal(!modal)
     // setRadioInput('');
-    setMessage('');
-  };
+    setMessage('')
+  }
 
   // Submitting the form in pop-up
-  const onSubmitSendMessage = async (e) => {
+  const onSubmitSendMessage = async e => {
     try {
-      const response = await axios.post(
-        'http://192.168.1.63:4000/sendMessage',
-        {
-          from: '14155238886',
-          to: selectedSubject,
-          msg: message,
-        }
-      );
+      const response = await axios.post('http://192.168.1.63:4000/sendMessage', {
+        from: '14155238886',
+        to: selectedSubject,
+        msg: message,
+      })
       if (response.status === 200) {
         toast.success('Message sent successfully!..', {
-          position: 'top-right',
+          position: 'top-center',
           autoClose: 2000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'dark',
+          theme: 'light',
           transition: Bounce,
-        });
+        })
       } else {
         toast.error('Message not sent', {
-          position: 'top-right',
+          position: 'top-center',
           autoClose: 2000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'dark',
+          theme: 'light',
           transition: Bounce,
-        });
+        })
       }
     } catch (error) {
-      console.log(error.messgae);
+      console.log(error.messgae)
     }
     // if ((radioInput && message) === '') {
     if (message === '') {
       toast.error('Please fill all the fields', {
-        position: 'top-right',
+        position: 'top-center',
         autoClose: 2000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: 0,
-        theme: 'dark',
+        theme: 'light',
         transition: Bounce,
-      });
+      })
     } else {
-      e.preventDefault();
+      e.preventDefault()
       // console.log('From:', radioInput);
       // console.log('Message:', message);
       // toast.success('Form submitted successfully!', {
@@ -146,14 +138,14 @@ function App() {
       //   pauseOnHover: true,
       //   draggable: true,
       //   progress: 0,
-      //   theme: 'dark',
+      //   theme: 'light',
       //   transition: Bounce,
       // });
-      setModal(false);
+      setModal(false)
       // setRadioInput('');
-      setMessage('');
+      setMessage('')
     }
-  };
+  }
 
   // Radio button in pop-up
   // const onRadioButtonHandler = (e) => {
@@ -161,9 +153,9 @@ function App() {
   // };
 
   // Message in pop-up
-  const onMessageHandler = (e) => {
-    setMessage(e.target.value);
-  };
+  const onMessageHandler = e => {
+    setMessage(e.target.value)
+  }
 
   // Receiving messages
   const onReceiveMessages = async () => {
@@ -172,39 +164,36 @@ function App() {
       const response = await axios.get(
         // `http://192.168.1.63:4000/receiveMessages/${selectedNumber}`
         `http://192.168.1.63:4000/receiveMessages`
-      );
+      )
       if (response.status === 200) {
         toast.success('Message received successfully!..', {
-          position: 'top-right',
+          position: 'top-center',
           autoClose: 2000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'dark',
+          theme: 'light',
           transition: Bounce,
-        });
+        })
       } else {
         toast.error('Message not received', {
-          position: 'top-right',
+          position: 'top-center',
           autoClose: 2000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'dark',
+          theme: 'light',
           transition: Bounce,
-        });
+        })
       }
     } catch (error) {
-      console.error(
-        'Error receiving data:',
-        error.response || error.message || error
-      );
+      console.error('Error receiving data:', error.response || error.message || error)
     }
-  };
+  }
 
   // Receiving data for whatsapp
   // const onReceiveData = async () => {
@@ -219,7 +208,7 @@ function App() {
   //       pauseOnHover: true,
   //       draggable: true,
   //       progress: 0,
-  //       theme: 'dark',
+  //       theme: 'light',
   //       transition: Bounce,
   //     });
   //   } catch (error) {
@@ -233,40 +222,37 @@ function App() {
   // Receiving data for instagram
   const onLoadData = async () => {
     try {
-      const response = await axios.get('http://192.168.1.63:4000/insta');
-      console.log(response.status);
+      const response = await axios.get('http://192.168.1.63:4000/insta')
+      console.log(response.status)
       if (response.status === 200) {
         toast.success('Comments received successfully!..', {
-          position: 'top-right',
+          position: 'top-center',
           autoClose: 2000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'dark',
+          theme: 'light',
           transition: Bounce,
-        });
+        })
       } else {
         toast.error('Comments not received', {
-          position: 'top-right',
+          position: 'top-center',
           autoClose: 2000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'dark',
+          theme: 'light',
           transition: Bounce,
-        });
+        })
       }
     } catch (error) {
-      console.error(
-        'Error receiving data:',
-        error.response || error.message || error
-      );
+      console.error('Error receiving data:', error.response || error.message || error)
     }
-  };
+  }
 
   return (
     <div>
@@ -275,59 +261,55 @@ function App() {
         <div className="title" title="Social-CrawlSuite">
           Social-CrawlSuite
         </div>
-        <div
+        <button
+          type="button"
           className={`tRefresh ${isRotated ? 'rotate' : ''}`}
           title="Reload"
           onClick={onRefresh}
+          aria-label="Reload"
         >
           <FontAwesomeIcon icon={faArrowsRotate} />
-        </div>
+          <div className="tRefreshText">Reload</div>
+        </button>
       </div>
 
       {/* Container contains whatsapp and instagram data */}
       <div className="container">
         {/* Searching Options... */}
         <div className="dropBox">
-          <select
-            id="dropDown"
-            value={selectedOption}
-            onChange={onSelectOptionInDropDown}
-          >
-            <option className="dropList" value="">
+          <select id="dropDown" value={selectedOption} onChange={onSelectOptionInDropDown}>
+            <option id="dropList" value="">
               All
             </option>
-            {options.map((option, index) => (
-              <option
-                className="dropList"
-                key={index}
-                value={option}
-                style={{ height: '60px' }}
-              >
+            {options.map(option => (
+              <option id="dropList" key={option.id} value={option}>
                 {option}
               </option>
             ))}
           </select>
         </div>
+
         {/* Displaying whatsapp and instagram data after search */}
         <div className="container1">
           {Array.isArray(filteredResults) &&
-            filteredResults.map((result) => (
+            filteredResults.map(result => (
               <div
                 title={result.lead_no}
                 key={result.subject}
-                className={`whatsapp ${
-                  selectedSubject === result.subject ? 'selected' : ''
-                }`}
+                className={`whatsapp ${selectedSubject === result.subject ? 'selected' : ''}`}
                 onClick={() => {
-                  onClickHandler(result.subject, result.type, result.messages);
+                  onClickHandler(result.subject, result.type, result.messages)
                 }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    onClickHandler(result.subject, result.type, result.messages)
+                  }
+                }}
+                role="button"
+                tabIndex={0}
               >
                 <div style={{ display: 'flex' }}>
-                  <div
-                    className={`image ${
-                      result.type === 'whatsapp' ? 'waImage' : 'igImage'
-                    }`}
-                  />
+                  <div className={`image ${result.type === 'whatsapp' ? 'waImage' : 'igImage'}`} />
                   <div className="lead_subject">
                     <div className="leadNo">{result.lead_no}</div>
                     <div className="subjects">{result.subject}</div>
@@ -335,7 +317,7 @@ function App() {
                 </div>
                 <div className="notif_arrow">
                   <div className="notification" title="Notification">
-                    {result.messages.some((msg) => msg.flag) && (
+                    {result.messages.some(msg => msg.flag) && (
                       <>
                         <FontAwesomeIcon icon={faBell} shake />
                         {console.log(result.messages.length)}
@@ -344,9 +326,7 @@ function App() {
                   </div>
                   <div
                     className={`arrow ${
-                      selectedSubject === result.subject
-                        ? 'selected'
-                        : 'notSelected'
+                      selectedSubject === result.subject ? 'selected' : 'notSelected'
                     }`}
                   >
                     &rarr;
@@ -359,7 +339,7 @@ function App() {
       {/* Pop-Up */}
       {modal && (
         <>
-          <div className="overlay" onClick={onSendMessageClose}></div>
+          <div className="overlay" onClick={onSendMessageClose} aria-hidden="true" />
           <div className="pop">
             <form className="form" onSubmit={onSubmitSendMessage}>
               <div className="from">
@@ -385,28 +365,51 @@ function App() {
                   customer
                 </label> */}
                 <div className="from_div">
-                  <div>From: </div>
-                  <div>14155238886</div>
+                  <span>From: </span>
+                  <span>14155238886</span>
                 </div>
                 <div className="to_div">
-                  <div>To: </div>
-                  <div>{selectedSubject}</div>
+                  <span>To: </span>
+                  <span>{selectedSubject}</span>
                 </div>
               </div>
               <div className="message">
-                <label htmlFor="message">Message:</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={message}
-                  onChange={onMessageHandler}
-                />
+                <label htmlFor="message">
+                  <div>Message:</div>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={message}
+                    onChange={onMessageHandler}
+                  />
+                </label>
               </div>
               <div className="btn">
-                <div type="submit" onClick={onSubmitSendMessage}>
+                <div
+                  type="submit"
+                  onClick={onSubmitSendMessage}
+                  tabIndex={0}
+                  role="button"
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      // keyboard interaction logic here
+                    }
+                  }}
+                >
                   Submit
                 </div>
-                <div onClick={onSendMessageClose}>Close</div>
+                <div
+                  onClick={onSendMessageClose}
+                  tabIndex={0}
+                  role="button"
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      // keyboard interaction logic here
+                    }
+                  }}
+                >
+                  Close
+                </div>
               </div>
             </form>
           </div>
@@ -414,12 +417,19 @@ function App() {
       )}
       {/* URLs for Whatsapp */}
       {myDataResult === 'whatsapp' && (
-        <>
+        <div className="whatsapp_container">
           <div
             title="SendMessages"
             className="sendMessages"
             onClick={onSendMessageOpen}
             style={{ top: '90px' }}
+            role="button"
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                // keyboard interaction logic here
+              }
+            }}
           >
             SendMessages
           </div>
@@ -428,23 +438,41 @@ function App() {
             className="receiveMessages"
             onClick={onReceiveMessages}
             style={{ top: '130px' }}
+            role="button"
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                // keyboard interaction logic here
+              }
+            }}
           >
             ReceiveMessages
           </div>
-          {/*<div
+          {/* <div
             title="ReceiveData"
             className="receiveData"
             onClick={onReceiveData}
             style={{ top: '170px' }}
           >
             ReceiveData
-          </div>*/}
-        </>
+          </div> */}
+        </div>
       )}
       {/* URLs for Instagram */}
       {myDataResult === 'instagram' && (
-        <>
-          <div title="LoadData" className="loadData" onClick={onLoadData}>
+        <div className="instagram_container">
+          <div
+            title="LoadData"
+            className="loadData"
+            role="button"
+            onClick={onLoadData}
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                // keyboard interaction logic here
+              }
+            }}
+          >
             LoadData
           </div>
           {/* <div
@@ -454,28 +482,19 @@ function App() {
           >
             ReceiveData
           </div> */}
-        </>
+        </div>
       )}
       {/* Getting messages based on selecting subject */}
       {selectedSubject && (
         <div className="messages">
+          <div className="img" />
           <div className="app">
             <Number1
               messages={
-                myData.result.find(
-                  (result) => result.subject === selectedSubject
-                )?.messages || []
+                myData.result.find(result => result.subject === selectedSubject)?.messages || []
               }
-              image={
-                myData.result.find(
-                  (result) => result.subject === selectedSubject
-                )?.image || []
-              }
-              type={
-                myData.result.find(
-                  (result) => result.subject === selectedSubject
-                )?.type || []
-              }
+              image={myData.result.find(result => result.subject === selectedSubject)?.image || []}
+              type={myData.result.find(result => result.subject === selectedSubject)?.type || []}
             />
           </div>
         </div>
@@ -483,7 +502,7 @@ function App() {
       {/* Toast */}
       <ToastContainer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
