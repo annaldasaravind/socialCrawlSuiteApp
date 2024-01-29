@@ -71,7 +71,6 @@ body {
   width: 100%;
   height: 70px;
   font-family: 'Roboto', sans-serif;
-  z-index: 1;
   padding-left: 25px;
   display: flex;
   justify-content: space-between;
@@ -99,7 +98,7 @@ body {
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.15s ease;
-  background-color: var(--border);
+  background-color: rgb(195, 228, 235);
 }
 
 .navBar .tRefresh .tRefreshText {
@@ -107,25 +106,35 @@ body {
 }
 
 .navBar .tRefresh:hover {
-  background: rgb(195, 228, 235);
+  background: rgb(187, 222, 229);
   transition: background 0.3s;
 }
 
-.navBar .tRefresh.rotate {
-  transform: rotate(360deg);
+.openSideBar {
+  width: fit-content;
+  line-height: 30px;
+  text-align: center;
+  display: block;
+  position: fixed;
+  padding: 0px 5px;
+  top: 70px;
+  z-index: 1;
+  font-size: 20px;
+  background-color: white;
+  border-start-end-radius: 10px;
+  border-end-end-radius: 10px;
 }
 
 .container {
   border: 1px solid var(--border);
   border-top: none;
   position: fixed;
-  width: 18%;
+  width: 350px;
   height: 100%;
   top: 70px;
 }
 
 .dropBox {
-  position: relative;
   width: 100%;
   height: 50px;
 }
@@ -144,28 +153,65 @@ body {
 }
 
 .container1 {
+  width: 100%;
   height: 87vh;
   overflow-y: auto;
   scroll-behavior: smooth;
 }
 
-.image.waImage {
+.whatsapp {
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  display: flex;
+  background-color: rgb(249, 249, 249);
+  cursor: pointer;
+  color: black;
+  padding: 0px 5px;
+  justify-content: space-between;
+}
+
+.whatsapp:hover {
+  background-color: var(--hover);
+  transition: background 200ms;
+}
+
+.whatsapp.selected {
+  background-color: rgb(228, 228, 228);
+  color: black;
+}
+
+.container_each {
+  display: flex;
+}
+
+.image .waImage {
   width: 40px;
   height: 40px;
   background-image: url('/images/img1.png');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 40px 40px;
+  background-size: cover;
   margin-top: 5px;
 }
 
-.image.igImage {
+.image .igImage {
   width: 40px;
   height: 40px;
   background-image: url('/images/img2.png');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 75px 50px;
+  background-size: cover;
+  margin-top: 5px;
+}
+
+.image .fbImage {
+  width: 40px;
+  height: 40px;
+  background-image: url('/images/img3.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
   margin-top: 5px;
 }
 
@@ -191,7 +237,6 @@ body {
   width: 20px;
   line-height: 45px;
   color: tomato;
-  z-index: 10;
   font-size: 18px;
   margin: 0px 3px;
 }
@@ -218,25 +263,25 @@ body {
 }
 
 .overlay {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
   background-color: rgb(129, 127, 127);
-  z-index: 11;
+  z-index: 1;
   opacity: 0.5;
 }
 
 .pop {
   border: 1px solid var(--border);
   width: 550px;
-  position: fixed;
+  position: absolute;
   top: 35%;
   left: 50%;
   padding: 16px;
   transform: translate(-50%, -50%);
-  z-index: 12;
+  z-index: 2;
   background-color: white;
   box-shadow: 5px 5px 10px rgb(125, 124, 124);
 }
@@ -315,146 +360,135 @@ label div {
   transition: background 0.2s;
 }
 
-.whatsapp {
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  background-color: rgb(249, 249, 249);
-  cursor: pointer;
-  color: black;
-  padding: 5px 20px;
-  justify-content: space-between;
-}
-
-.whatsapp:hover {
-  background-color: var(--hover);
-  transition: background 200ms;
-}
-
-.whatsapp.selected {
-  background-color: rgb(228, 228, 228);
-  color: black;
-}
-
 .whatsapp_container {
-  z-index: 19;
-  position: relative;
-  width: 160px;
-  height: 100px;
-  left: 90.5%;
-  top: 70px;
-}
-
-.sendMessages {
-  border: 1px solid var(--border);
-  width: 140px;
-  height: 35px;
-  padding: 5px;
-  text-align: center;
+  z-index: 2;
   position: fixed;
-  right: 30px;
-  color: white;
-  background-color: var(--button);
-  border-radius: 3px;
-  z-index: 20;
-  cursor: pointer;
+  width: fit-content;
+  height: fit-content;
+  top: 70px;
+  right: 0;
+  margin: 5px;
 }
 
-.sendMessages:hover {
-  background-color: var(--button-hover);
-  color: white;
-  transition: background 100ms;
-}
-
+.sendMessages,
 .receiveMessages {
   border: 1px solid var(--border);
   width: 140px;
   height: 35px;
-  position: fixed;
+  padding: 5px;
   text-align: center;
   right: 30px;
-  border-radius: 3px;
-  cursor: pointer;
-  padding: 5px;
-  background-color: var(--button);
   color: white;
-  z-index: 20;
+  background-color: var(--button);
+  border-radius: 3px;
+  z-index: 2;
+  cursor: pointer;
 }
 
+.sendMessages:hover,
 .receiveMessages:hover {
   background-color: var(--button-hover);
   color: white;
   transition: background 100ms;
 }
 
-.instagram_container {
-  z-index: 19;
-  position: relative;
-  width: 160px;
-  height: 50px;
-  left: 90.5%;
+.instagram_container,
+.facebook_container {
+  z-index: 2;
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
   top: 70px;
-  padding-top: 10px;
+  right: 0;
+  margin: 5px;
 }
 
-.loadData {
+.loadData,
+.loadDataFB {
   border: 1px solid var(--border);
   width: 140px;
   height: 35px;
   padding: 5px;
   text-align: center;
-  position: fixed;
   right: 30px;
   color: white;
   background-color: var(--button);
   border-radius: 3px;
-  z-index: 20;
+  z-index: 2;
   cursor: pointer;
 }
 
-.loadData:hover {
+.loadData:hover,
+.loadDataFB:hover {
   background-color: var(--button-hover);
   color: white;
   transition: background 100ms;
 }
 
 /* Number1 Component */
-.messages {
-  width: 82%;
-  height: 92vh;
+.messages.sidebarOpened {
+  width: calc(100% - 350px);
+  height: calc(100% - 70px);
   position: fixed;
-  left: 18%;
   top: 70px;
-  overflow-y: auto;
+  right: 0;
   scroll-behavior: smooth;
-  z-index: 5;
+  transition: width 0.3s;
+}
+
+.messages.sidebarClosed {
+  width: 100%;
+  height: calc(100% - 70px);
+  position: fixed;
+  top: 70px;
+  right: 0;
+  scroll-behavior: smooth;
+  transition: width 0.3s;
 }
 
 .messages .img {
-  width: 82%;
-  height: 92vh;
-  position: fixed;
-  left: 18%;
+  width: 100%;
+  height: 100%;
   top: 70px;
   background-image: url('../images/whatsapp.png');
   background-position: center;
   background-repeat: repeat;
   background-color: hsl(36.92deg 28.89% 91.18%);
+  background-attachment: fixed;
 }
 
 .app {
-  width: 82%;
-  height: fit-content;
+  width: 100%;
+  height: 100%;
   position: absolute;
-  padding: 10px;
   top: 0;
-  left: 7%;
-  z-index: 6;
+  right: 0;
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+.app.a_whatsapp {
+  height: calc(100% - 80px);
+  margin-top: 80px;
+  transition: margin-top 0.3s;
+}
+
+.app.a_instagram {
+  height: calc(100% - 40px);
+  margin-top: 40px;
+  transition: margin-top 0.3s;
+}
+
+.app.a_facebook {
+  height: calc(100% - 40px);
+  margin-top: 40px;
+  transition: margin-top 0.3s;
 }
 
 .image_link {
-  width: fit-content;
+  width: 100%;
   line-height: 20px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .image_link a {
@@ -472,7 +506,6 @@ label div {
 .day_wise {
   border: 1px solid var(--border);
   width: fit-content;
-  line-height: 20px;
   margin: 10px auto;
   font-size: 10px;
   padding: 0px 5px;
@@ -498,6 +531,7 @@ label div {
 .text1 {
   border: 1px solid var(--border);
   width: fit-content;
+  height: auto;
   margin-top: 10px;
 }
 
@@ -515,8 +549,8 @@ label div {
 
 .body {
   width: fit-content;
-  line-height: 32px;
-  padding: 0px 10px;
+  height: auto;
+  padding: 5px 10px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -541,4 +575,138 @@ label div {
   padding: 0px 10px 5px 10px;
   float: right;
   clear: right;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .navBar .title {
+    font-size: 25px;
+  }
+
+  .container {
+    width: 200px;
+  }
+
+  .openSideBar.myOpen {
+    left: 199px;
+    transition: left 0.3s;
+  }
+
+  .openSideBar.myClose {
+    left: 0px;
+    transition: left 0.3s;
+  }
+
+  .image .waImage,
+  .image .igImage,
+  .image .fbImage {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    margin-top: 15px;
+  }
+
+  .leadNo {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .subjects {
+    font-size: 11px;
+  }
+
+  .messages.sidebarOpened {
+    width: calc(100% - 200px);
+  }
+
+  .app {
+    padding: 5px;
+  }
+
+  .body {
+    max-width: 200px;
+    overflow-x: scroll;
+  }
+
+  .pop {
+    width: 350px;
+    top: 45%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .navBar .title {
+    font-size: 30px;
+  }
+
+  .container {
+    width: 300px;
+  }
+
+  .openSideBar.myOpen {
+    left: 299px;
+    transition: left 0.3s;
+  }
+
+  .openSideBar.myClose {
+    left: 0px;
+    transition: left 0.3s;
+  }
+
+  .messages.sidebarOpened {
+    width: calc(100% - 300px);
+  }
+
+  .body {
+    max-width: 300px;
+    overflow-x: scroll;
+  }
+
+  .pop {
+    width: 450px;
+    top: 45%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navBar .title {
+    font-size: 40px;
+  }
+
+  .openSideBar.myOpen {
+    left: 349px;
+    transition: left 0.3s;
+  }
+
+  .openSideBar.myClose {
+    left: 0px;
+    transition: left 0.3s;
+  }
+
+  .body {
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .container_each {
+    padding: 0px 10px;
+  }
+
+  .openSideBar.myOpen {
+    left: 349px;
+    transition: left 0.3s;
+  }
+
+  .openSideBar.myClose {
+    left: 0px;
+    transition: left 0.3s;
+  }
+
+  .app {
+    padding: 20px 40px;
+  }
+
+  .body {
+    max-width: 600px;
+  }
 }

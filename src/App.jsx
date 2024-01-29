@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -6,6 +7,7 @@ import { ToastContainer, toast, Bounce } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell, faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
+import { MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft } from 'react-icons/md'
 import Number1 from './components/Number1'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
@@ -20,6 +22,7 @@ function App() {
   const [options, setOptions] = useState([])
   const [isRotated, setRotated] = useState(false)
   const [dropDown, setDropDown] = useState(false)
+  const [openSideBar, setOpenSideBar] = useState(true)
 
   // Reading Data
   const myFunction = async () => {
@@ -94,7 +97,7 @@ function App() {
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'light',
+          theme: 'dark',
           transition: Bounce,
         })
       } else {
@@ -106,7 +109,7 @@ function App() {
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'light',
+          theme: 'dark',
           transition: Bounce,
         })
       }
@@ -123,7 +126,7 @@ function App() {
         pauseOnHover: true,
         draggable: true,
         progress: 0,
-        theme: 'light',
+        theme: 'dark',
         transition: Bounce,
       })
     } else {
@@ -138,7 +141,7 @@ function App() {
       //   pauseOnHover: true,
       //   draggable: true,
       //   progress: 0,
-      //   theme: 'light',
+      //   theme: 'dark',
       //   transition: Bounce,
       // });
       setModal(false)
@@ -174,7 +177,7 @@ function App() {
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'light',
+          theme: 'dark',
           transition: Bounce,
         })
       } else {
@@ -186,7 +189,7 @@ function App() {
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'light',
+          theme: 'dark',
           transition: Bounce,
         })
       }
@@ -208,7 +211,7 @@ function App() {
   //       pauseOnHover: true,
   //       draggable: true,
   //       progress: 0,
-  //       theme: 'light',
+  //       theme: 'dark',
   //       transition: Bounce,
   //     });
   //   } catch (error) {
@@ -233,7 +236,7 @@ function App() {
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'light',
+          theme: 'dark',
           transition: Bounce,
         })
       } else {
@@ -245,13 +248,53 @@ function App() {
           pauseOnHover: true,
           draggable: true,
           progress: 0,
-          theme: 'light',
+          theme: 'dark',
           transition: Bounce,
         })
       }
     } catch (error) {
       console.error('Error receiving data:', error.response || error.message || error)
     }
+  }
+
+  // Receiving data for facebook
+  const onLoadDataFB = async () => {
+    try {
+      const response = await axios.get('http://192.168.1.63:4000/fb')
+      console.log(response.status)
+      if (response.status === 200) {
+        toast.success('Comments received successfully!..', {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: 0,
+          theme: 'dark',
+          transition: Bounce,
+        })
+      } else {
+        toast.error('Comments not received', {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: 0,
+          theme: 'dark',
+          transition: Bounce,
+        })
+      }
+    } catch (error) {
+      console.error('Error receiving data:', error.response || error.message || error)
+    }
+  }
+
+  // open sidebar
+  const onOpenSidebarHandler = () => {
+    setOpenSideBar(!openSideBar)
   }
 
   return (
@@ -272,70 +315,102 @@ function App() {
           <div className="tRefreshText">Reload</div>
         </button>
       </div>
-
-      {/* Container contains whatsapp and instagram data */}
-      <div className="container">
-        {/* Searching Options... */}
-        <div className="dropBox">
-          <select id="dropDown" value={selectedOption} onChange={onSelectOptionInDropDown}>
-            <option id="dropList" value="">
-              All
-            </option>
-            {options.map(option => (
-              <option id="dropList" key={option.id} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Displaying whatsapp and instagram data after search */}
-        <div className="container1">
-          {Array.isArray(filteredResults) &&
-            filteredResults.map(result => (
-              <div
-                title={result.lead_no}
-                key={result.subject}
-                className={`whatsapp ${selectedSubject === result.subject ? 'selected' : ''}`}
-                onClick={() => {
-                  onClickHandler(result.subject, result.type, result.messages)
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') {
-                    onClickHandler(result.subject, result.type, result.messages)
-                  }
-                }}
-                role="button"
-                tabIndex={0}
-              >
-                <div style={{ display: 'flex' }}>
-                  <div className={`image ${result.type === 'whatsapp' ? 'waImage' : 'igImage'}`} />
-                  <div className="lead_subject">
-                    <div className="leadNo">{result.lead_no}</div>
-                    <div className="subjects">{result.subject}</div>
-                  </div>
-                </div>
-                <div className="notif_arrow">
-                  <div className="notification" title="Notification">
-                    {result.messages.some(msg => msg.flag) && (
-                      <>
-                        <FontAwesomeIcon icon={faBell} shake />
-                        {console.log(result.messages.length)}
-                      </>
-                    )}
-                  </div>
-                  <div
-                    className={`arrow ${
-                      selectedSubject === result.subject ? 'selected' : 'notSelected'
-                    }`}
-                  >
-                    &rarr;
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
+      {/* open sidebar */}
+      <div
+        className={`openSideBar ${openSideBar ? 'myOpen' : 'myClose'}`}
+        onClick={onOpenSidebarHandler}
+        onKeyDown={e => {
+          if (e.key === 'Enter') {
+            // logic
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-label="sidebar"
+      >
+        {openSideBar ? <MdKeyboardDoubleArrowLeft /> : <MdKeyboardDoubleArrowRight />}
       </div>
+      {openSideBar && (
+        <>
+          {/* Container contains whatsapp and instagram data */}
+          <div className="container">
+            {/* Searching Options... */}
+            <div className="dropBox">
+              <select id="dropDown" value={selectedOption} onChange={onSelectOptionInDropDown}>
+                <option id="dropList" value="">
+                  All
+                </option>
+                {options.map(option => (
+                  <option id="dropList" key={option.id} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Displaying whatsapp and instagram data after search */}
+            <div className="container1">
+              {Array.isArray(filteredResults) &&
+                filteredResults.map(result => (
+                  <div
+                    title={result.lead_no}
+                    key={result.subject}
+                    className={`whatsapp ${selectedSubject === result.subject ? 'selected' : ''}`}
+                    onClick={() => {
+                      onClickHandler(result.subject, result.type, result.messages)
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        onClickHandler(result.subject, result.type, result.messages)
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="container_each">
+                      {/* <div className={`image ${result.type === 'whatsapp' ? 'waImage' : 'igImage'}`} /> */}
+                      <div className="image">
+                        {(() => {
+                          if (result.type === 'whatsapp') {
+                            return <div className="waImage" />
+                          }
+                          if (result.type === 'instagram') {
+                            return <div className="igImage" />
+                          }
+                          if (result.type === 'facebook') {
+                            return <div className="fbImage" />
+                          }
+                          return 'defaultImage'
+                        })()}
+                      </div>
+                      <div className="lead_subject">
+                        <div className="leadNo">{result.lead_no}</div>
+                        <div className="subjects">{result.subject}</div>
+                      </div>
+                    </div>
+                    <div className="notif_arrow">
+                      <div className="notification" title="Notification">
+                        {result.messages.some(msg => msg.flag) && (
+                          <>
+                            <FontAwesomeIcon icon={faBell} shake />
+                            {console.log(result.messages.length)}
+                          </>
+                        )}
+                      </div>
+                      <div
+                        className={`arrow ${
+                          selectedSubject === result.subject ? 'selected' : 'notSelected'
+                        }`}
+                      >
+                        &rarr;
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </>
+      )}
       {/* Pop-Up */}
       {modal && (
         <>
@@ -484,11 +559,39 @@ function App() {
           </div> */}
         </div>
       )}
+      {/* URLs for Facebook */}
+      {myDataResult === 'facebook' && (
+        <div className="facebook_container">
+          <div
+            title="LoadDataFB"
+            className="loadDataFB"
+            role="button"
+            onClick={onLoadDataFB}
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                // keyboard interaction logic here
+              }
+            }}
+          >
+            LoadData
+          </div>
+          {/* <div
+            title="ReceiveData"
+            className="receiveData"
+            onClick={onReceiveData}
+          >
+            ReceiveData
+          </div> */}
+        </div>
+      )}
       {/* Getting messages based on selecting subject */}
       {selectedSubject && (
-        <div className="messages">
+        <div className={`messages ${openSideBar ? 'sidebarOpened' : 'sidebarClosed'}`}>
           <div className="img" />
-          <div className="app">
+          <div
+            className={`app ${myDataResult === 'whatsapp' ? 'a_whatsapp' : myDataResult === 'instagram' ? 'a_instagram' : myDataResult === 'facebook' ? 'a_facebook' : ''}`}
+          >
             <Number1
               messages={
                 myData.result.find(result => result.subject === selectedSubject)?.messages || []
