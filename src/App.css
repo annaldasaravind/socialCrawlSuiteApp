@@ -215,6 +215,17 @@ body {
   margin-top: 5px;
 }
 
+.image .liImage {
+  width: 40px;
+  height: 40px;
+  background-image: url('/images/img4.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
 .leadNo {
   font-size: 21px;
   padding-left: 6px;
@@ -360,7 +371,10 @@ label div {
   transition: background 0.2s;
 }
 
-.whatsapp_container {
+.whatsapp_container,
+.instagram_container,
+.facebook_container,
+.linkedin_container {
   z-index: 2;
   position: fixed;
   width: fit-content;
@@ -371,7 +385,10 @@ label div {
 }
 
 .sendMessages,
-.receiveMessages {
+.receiveMessages,
+.loadDataIG,
+.loadDataFB,
+.loadDataLI {
   border: 1px solid var(--border);
   width: 140px;
   height: 35px;
@@ -386,40 +403,10 @@ label div {
 }
 
 .sendMessages:hover,
-.receiveMessages:hover {
-  background-color: var(--button-hover);
-  color: white;
-  transition: background 100ms;
-}
-
-.instagram_container,
-.facebook_container {
-  z-index: 2;
-  position: fixed;
-  width: fit-content;
-  height: fit-content;
-  top: 70px;
-  right: 0;
-  margin: 5px;
-}
-
-.loadData,
-.loadDataFB {
-  border: 1px solid var(--border);
-  width: 140px;
-  height: 35px;
-  padding: 5px;
-  text-align: center;
-  right: 30px;
-  color: white;
-  background-color: var(--button);
-  border-radius: 3px;
-  z-index: 2;
-  cursor: pointer;
-}
-
-.loadData:hover,
-.loadDataFB:hover {
+.receiveMessages:hover,
+.loadDataIG:hover,
+.loadDataFB:hover,
+.loadDataLI:hover {
   background-color: var(--button-hover);
   color: white;
   transition: background 100ms;

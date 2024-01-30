@@ -223,7 +223,7 @@ function App() {
   // };
 
   // Receiving data for instagram
-  const onLoadData = async () => {
+  const onLoadDataIG = async () => {
     try {
       const response = await axios.get('http://192.168.1.63:4000/insta')
       console.log(response.status)
@@ -261,6 +261,41 @@ function App() {
   const onLoadDataFB = async () => {
     try {
       const response = await axios.get('http://192.168.1.63:4000/fb')
+      console.log(response.status)
+      if (response.status === 200) {
+        toast.success('Comments received successfully!..', {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: 0,
+          theme: 'dark',
+          transition: Bounce,
+        })
+      } else {
+        toast.error('Comments not received', {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: 0,
+          theme: 'dark',
+          transition: Bounce,
+        })
+      }
+    } catch (error) {
+      console.error('Error receiving data:', error.response || error.message || error)
+    }
+  }
+
+  // Receiving data for linkedin
+  const onLoadDataLI = async () => {
+    try {
+      const response = await axios.get('http://192.168.1.63:4000/li')
       console.log(response.status)
       if (response.status === 200) {
         toast.success('Comments received successfully!..', {
@@ -379,6 +414,9 @@ function App() {
                           }
                           if (result.type === 'facebook') {
                             return <div className="fbImage" />
+                          }
+                          if (result.type === 'linkedin') {
+                            return <div className="liImage" />
                           }
                           return 'defaultImage'
                         })()}
@@ -537,10 +575,10 @@ function App() {
       {myDataResult === 'instagram' && (
         <div className="instagram_container">
           <div
-            title="LoadData"
-            className="loadData"
+            title="LoadDataIG"
+            className="loadDataIG"
             role="button"
-            onClick={onLoadData}
+            onClick={onLoadDataIG}
             tabIndex={0}
             onKeyDown={e => {
               if (e.key === 'Enter') {
@@ -567,6 +605,32 @@ function App() {
             className="loadDataFB"
             role="button"
             onClick={onLoadDataFB}
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                // keyboard interaction logic here
+              }
+            }}
+          >
+            LoadData
+          </div>
+          {/* <div
+            title="ReceiveData"
+            className="receiveData"
+            onClick={onReceiveData}
+          >
+            ReceiveData
+          </div> */}
+        </div>
+      )}
+      {/* URLs for Linkedin */}
+      {myDataResult === 'linkedin' && (
+        <div className="linkedin_container">
+          <div
+            title="LoadDataLI"
+            className="loadDataLI"
+            role="button"
+            onClick={onLoadDataLI}
             tabIndex={0}
             onKeyDown={e => {
               if (e.key === 'Enter') {
